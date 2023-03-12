@@ -1,19 +1,21 @@
-//const colors = require('colors');
-import {} from 'colors';
+import { log } from 'console';
+import * as os from 'os';
+import * as net from 'network-list';
 
 
-console.log("Node JS App".red);
+console.log(`Hello Node ${ process.version}`);
 
-//const math=require('./module');
+//console.log( os.arch() );
+//console.log( os.cpus() );                                                  // cpu info
+//console.log( `No of threads are ${os.cpus().length}` );               // no of threads
+//os.cpus().forEach(i=>log(i));
+//console.log( os.cpus()[0].model  );                               // processor info
 
-//console.log(math);
-//console.log(math.area );
-//console.log(math.func() );
+//console.log(`Total ram ${os.totalmem()/1024/1024 }MB and Free Memory is ${os.freemem()/1024/1024}`);
+//console.log( os.networkInterfaces());
+//console.log( os.uptime() );
+//console.log( os.userInfo() );
 
-//console.log( math );
 
+//net.scanEach({}, (err, obj) => {console.log(obj);                            });
 
-/* ES6 Module */
-import { call } from './module.js';
-
-console.log(call() );
