@@ -1,21 +1,34 @@
-import { log } from 'console';
-import * as os from 'os';
-import * as net from 'network-list';
+import { EventEmitter } from 'node:events';
+
+class Event extends EventEmitter {};
+
+let emitter=new Event();
+
+// emitter.on("done",(res,x)=>{
+//      console.log(`Event Done 1 with ${res} response and handled is ${x.handled}`);
+//      x.handled=true;
+// });
+
+// emitter.on("done",(res,x)=>{
+//      console.log(`Event Done 2 with ${res} response and handled is ${x.handled}`);
+// });
 
 
-console.log(`Hello Node ${ process.version}`);
-
-//console.log( os.arch() );
-//console.log( os.cpus() );                                                  // cpu info
-//console.log( `No of threads are ${os.cpus().length}` );               // no of threads
-//os.cpus().forEach(i=>log(i));
-//console.log( os.cpus()[0].model  );                               // processor info
-
-//console.log(`Total ram ${os.totalmem()/1024/1024 }MB and Free Memory is ${os.freemem()/1024/1024}`);
-//console.log( os.networkInterfaces());
-//console.log( os.uptime() );
-//console.log( os.userInfo() );
+// emitter.emit("done","ok",{handled:false});
+// emitter.emit("done","ok",{handled:false});
 
 
-//net.scanEach({}, (err, obj) => {console.log(obj);                            });
+//console.log(`Hello Node JS ${process.version}`);
+
+
+/* exp */
+
+//export default emitter=emitter;
+
+export { emitter as emitter };
+
+import * as x from './login.js';
+//import * as account from './account';
+
+
 
