@@ -10,11 +10,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "devDependencies": {
     "nodemon": "^2.0.21"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "network-list": "^1.1.5",
     "network-speed": "^2.1.1"
   }

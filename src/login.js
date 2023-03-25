@@ -1,4 +1,4 @@
-import {emitter} from './app';
+import {emitter} from './events';
 
 
 emitter.on("login",()=>{
