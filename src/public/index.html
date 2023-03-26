@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Hello Express</title>
+     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="container">
+          <h1>Hello Express JS</h1>
+          <img src="img/kang.svg" alt="kangaroo" width="70" height="56">
+
+          <form action="/search" method="get">
+               <label>Car: <input type="search" name="query" required></label>
+               <label>Used : <input type="checkbox" name="used" value="true"></label>
+                <button>Search</button>
+          </form>
+          <hr>
+          <form action="/send" method="post">
+               <input type="text" name="wedf" required> <button>Send</button>
+          </form>
+          <script src="js/common.js"></script>
+     </div>
+</body>
+</html>
