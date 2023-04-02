@@ -2,7 +2,14 @@ require("dotenv").config();
 const express=require("express");
 const app=express();
 const path=require("path");
+const admin=require("./admin");
+const author=require("./author");
+const bodyParser=require("body-parser");
 
+
+app.use(bodyParser.json());
+ // parse application/x-www-form-urlencoded
+ app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(express.static(path.resolve("src/public")));
 
 /* app.use((req,res,next)=>{
@@ -11,11 +18,10 @@ app.use(express.static(path.resolve("src/public")));
 }); */
 
 
-
 app.get('/',(req,res)=>{
      res.setHeader('Content-Type','text/html');
-     //res.status(200).send("<h1>Home Page</h1>");
-     res.status(200).send(req.url);
+     res.status(200).send("<h1>Home Page</h1>");
+     //res.status(200).send(req.url);
 });
 
 app.get('/search',(req,res)=>{
@@ -38,18 +44,29 @@ app.get('/product/:brand/:name',(req,res)=>{
 });
 
 app.post('/send',(req,res)=>{
-     res.status(200).send("Form Submitted");
+     
+     if( req.body.name=="admin" && req.body.pass=="123456" ){
+          res.status(200).send(req.body);
+     }
+     else{
+          res.status(404).send("Incorrect inputs");
+     }
+
 });
 
 
-function checkAuth(req,res,next){
-     console.log(`Admin Login at ${ new Date(Date.now()).toLocaleString() }`);
+/* Router */
+app.use('/admin',admin);
+app.use("/author",author);
+
+/* function checkAuth(req,res,next){
+     console.log(`Admin Login at ${new Date(Date.now()).toLocaleString()}`);
      next();
 };
 app.use('/admin',checkAuth,(req,res)=>{
      res.setHeader('Content-Type','text/html');
-     res.status(200).send("Hello Admin")
-});
+     res.status(200).send("Hello Admin");
+}); */
 
 
 /* wildcard handler */
