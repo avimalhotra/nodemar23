@@ -19,6 +19,7 @@ app.use(session({
  }))
 
 app.use(cookieParser());
+app.use(bodyParser.text());
 app.use(bodyParser.json());
  // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false })); 
@@ -28,11 +29,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
      console.log(`Login at ${ new Date(Date.now()).toLocaleString() }`);
      next();
 }); */
-app.use( (req, res, next)=>{
+/* app.use( (req, res, next)=>{
      if (!req.session.views) {
        req.session.views = {}
      }
-   
      // get the url pathname
      var pathname = parseurl(req).pathname
    
@@ -40,13 +40,26 @@ app.use( (req, res, next)=>{
      req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
    
      next()
-   })
+   }) */
 
 app.get('/',(req,res)=>{
      res.setHeader('Content-Type','text/html');
-     //res.status(200).send(`<h1>Home Page <small>${req.sessionID}</small> </h1>`);
-     res.send('Session Views :  '+ req.session.views['/'] + ' times');
+     res.status(200).send(`<h1>Home Page </h1>`);
+     //res.send('Session Views :  '+ req.session.views['/'] + ' times');
 });
+
+const data=[{name:"aa",id:12},{name:"bb",id:13}];
+
+app.get("/api",(req,res)=>{
+     res.header('Access-Control-Allow-Origin',"*");
+     return res.status(200).send(data);
+});
+
+app.post("/searchapi",(req,res)=>{
+     let x=req.body;
+     res.status(200).send(data);
+});
+
 
 app.get('/cookie',(req,res)=>{
      res.setHeader('Content-Type','text/html');
