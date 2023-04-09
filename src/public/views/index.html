@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Hello {{name}}</title>
+     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="container">
+          <header>
+               {% include 'header.html' %}
+          </header>
+          <nav>
+               {% include 'nav.html' %}
+          </nav>
+          <main>
+         
+          <p> {{month.join(" -> ")}} </p>
+          <img src="img/kang.svg" alt="">
+          <!-- <h2>Name is <%= name %> and id is <%= id %> </h2>  
+          <%  if(city.name=="noida"){ %>
+               <p> City is  <%= city.name %> </p>
+               <p> Pin is  <%= city.pin %> </p>
+          <% } %>    -->
+         <section>
+          <h2>Get</h2>
+          <form action="/search" method="get" name="search">
+               <label>Car: <input type="search" name="query" required></label>
+                <button>Search</button>
+          </form>
+         </section>
+          <hr>
+          <section>
+               <h2>Post</h2>
+          <form action="/send" method="post">
+               <label>Username: <input type="text" name="name" required></label> 
+               <label>Password: <input type="password" name="pass" required></label> <button type="submit">Send</button>
+          </form>
+          <!-- <ol>
+               <% month.forEach(function(name) { %>
+                   <li><%= name %></li>
+               <% }); %>
+           </ol> -->
+          </section>
+          </main>
+          <footer>
+               <!-- <%- include('footer'); %> -->
+               {% include 'footer.html' %}
+          </footer>
+     </div>
+     <script src="js/common.js"></script>   
+     <!-- <script>
+          fetch("views/error.html").then(i=>i.text()).then(i=>{
+               document.querySelector("footer").innerHTML=i;
+          });
+     </script>   -->
+</body>
+</html>

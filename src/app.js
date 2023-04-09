@@ -8,7 +8,20 @@ const bodyParser=require("body-parser");
 const parseurl=require('parseurl');
 const cookieParser=require("cookie-parser");
 const session=require("express-session");
+const nunjucks=require("nunjucks");
 
+// configure
+nunjucks.configure(path.resolve(__dirname,'public/views'),{
+     express:app,
+     autoscape:true,
+     noCache:false,
+     watch:true
+ });
+
+
+
+//app.set('view engine', 'ejs');
+///app.set('views', path.join(__dirname, 'public/views'));
 
 app.set('trust proxy', 1); 
 app.use(session({
@@ -23,7 +36,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.json());
  // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false })); 
-//app.use(express.static(path.resolve("src/public")));
+app.use(express.static(path.resolve("src/public")));
 
 /* app.use((req,res,next)=>{
      console.log(`Login at ${ new Date(Date.now()).toLocaleString() }`);
@@ -44,9 +57,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/',(req,res)=>{
      res.setHeader('Content-Type','text/html');
-     res.status(200).send(`<h1>Home Page </h1>`);
+     //res.status(200).send(`<h1>Home Page </h1>`);
      //res.send('Session Views :  '+ req.session.views['/'] + ' times');
+     //res.render('index',{name:"Avinash",id:212,city:{name:"noida",pin:201301},month:["jan","feb"]});
+     res.render('index.html',{name:"Avinash",id:212,city:{name:"noida",pin:201301},month:["jan","feb"]});
+
 });
+
+app.get('/about',(req,res)=>{
+     res.render('about.html',{name:"Avi",id:200,month:["jan","feb"],user:{name:"aa",id:22}})
+})
 
 const data=[{name:"aa",id:12},{name:"bb",id:13}];
 
