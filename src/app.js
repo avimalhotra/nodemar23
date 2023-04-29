@@ -37,6 +37,9 @@ app.use(bodyParser.json());
  // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(express.static(path.resolve("src/public")));
+/* bootstrap path */
+app.use(express.static('node_modules/bootstrap/dist'));
+
 
 /* app.use((req,res,next)=>{
      console.log(`Login at ${ new Date(Date.now()).toLocaleString() }`);

@@ -5,6 +5,7 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Hello {{name}}</title>
+     <link rel="stylesheet" href="css/bootstrap.min.css">
      <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,9 +16,10 @@
           <nav>
                {% include 'nav.html' %}
           </nav>
-          <main>
+          <main class="p-3">
          
-          <p> {{month.join(" -> ")}} </p>
+          <div class="alert alert-info"> {{month.join(" -> " )}} </div>
+
           <img src="img/kang.svg" alt="">
           <!-- <h2>Name is <%= name %> and id is <%= id %> </h2>  
           <%  if(city.name=="noida"){ %>
@@ -50,6 +52,7 @@
                {% include 'footer.html' %}
           </footer>
      </div>
+     <script src="js/bootstrap.min.js"></script>
      <script src="js/common.js"></script>   
      <!-- <script>
           fetch("views/error.html").then(i=>i.text()).then(i=>{
