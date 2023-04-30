@@ -9,6 +9,8 @@ const parseurl=require('parseurl');
 const cookieParser=require("cookie-parser");
 const session=require("express-session");
 const nunjucks=require("nunjucks");
+const mongoose=require('./dao');
+const cars=require('./models/cars');
 
 // configure
 nunjucks.configure(path.resolve(__dirname,'public/views'),{
@@ -36,6 +38,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.json());
  // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false })); 
+
 app.use(express.static(path.resolve("src/public")));
 /* bootstrap path */
 app.use(express.static('node_modules/bootstrap/dist'));
@@ -59,19 +62,36 @@ app.use(express.static('node_modules/bootstrap/dist'));
    }) */
 
 app.get('/',(req,res)=>{
-     res.setHeader('Content-Type','text/html');
-     //res.status(200).send(`<h1>Home Page </h1>`);
-     //res.send('Session Views :  '+ req.session.views['/'] + ' times');
-     //res.render('index',{name:"Avinash",id:212,city:{name:"noida",pin:201301},month:["jan","feb"]});
-     res.render('index.html',{name:"Avinash",id:212,city:{name:"noida",pin:201301},month:["jan","feb"]});
+     res.setHeader('Content-Type','text/html');  
+     
+     let data=cars.find({}).sort({name:1}).then(i=>{
+          res.render('index.html',{name:"Avinash",id:212,city:{name:"noida",pin:201301},month:["jan","feb"],data:i});
+     });
 
 });
+
+app.get('/storedata',(req,res)=>{
+     let name=req.query.name, type=req.query.type,price=req.query.price;
+     const car=new cars({
+          _id: new mongoose.Types.ObjectId(),
+          name:name,
+          type:type,
+          price:price
+     });
+     
+
+     car.save().then(i=>{
+          res.status(200).send("data saved")
+     })
+
+})
+
 
 app.get('/about',(req,res)=>{
      res.render('about.html',{name:"Avi",id:200,month:["jan","feb"],user:{name:"aa",id:22}})
 })
 
-const data=[{name:"aa",id:12},{name:"bb",id:13}];
+//const data=[{name:"aa",id:12},{name:"bb",id:13}];
 
 app.get("/api",(req,res)=>{
      res.header('Access-Control-Allow-Origin',"*");
@@ -150,5 +170,4 @@ app.get('/**',(req,res)=>{
 app.listen(process.env.PORT,()=>{
      console.log(`App running at http://127.0.0.1:${process.env.PORT}`);
 });
-
 

@@ -19,36 +19,56 @@
           <main class="p-3">
          
           <div class="alert alert-info"> {{month.join(" -> " )}} </div>
-
-          <img src="img/kang.svg" alt="">
+          <!-- <img src="img/kang.svg" alt=""> -->
           <!-- <h2>Name is <%= name %> and id is <%= id %> </h2>  
           <%  if(city.name=="noida"){ %>
                <p> City is  <%= city.name %> </p>
                <p> Pin is  <%= city.pin %> </p>
           <% } %>    -->
-         <section>
+          <section class="border border-2 p-3 my-3">
           <h2>Get</h2>
           <form action="/search" method="get" name="search">
                <label>Car: <input type="search" name="query" required></label>
                 <button>Search</button>
           </form>
          </section>
-          <hr>
-          <section>
+          
+          <section class="border border-2 p-3 my-3">
                <h2>Post</h2>
           <form action="/send" method="post">
                <label>Username: <input type="text" name="name" required></label> 
                <label>Password: <input type="password" name="pass" required></label> <button type="submit">Send</button>
           </form>
-          <!-- <ol>
-               <% month.forEach(function(name) { %>
-                   <li><%= name %></li>
-               <% }); %>
-           </ol> -->
           </section>
+          <section class="border border-2 p-3 my-3">
+               <h2>Add Data</h2>
+               <form action="/storedata" method="get">
+                    <div class="row g-3 align-items-center">
+                         <div class="col"><input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name" required></div>
+                         <div class="col"><input type="text" class="form-control" name="type" placeholder="Type" aria-label="Type" required></div>
+                         <div class="col"><input type="text" class="form-control" name="price" placeholder="Price" aria-label="Price" required></div>
+                         <div class="col"><button class="btn btn-primary" type="submit">Submit</button></div>
+                    </div>
+               </form>
+          </section>
+
+          <table class="table table-bordered m-3 table-secondary">
+              <thead>
+               <tr class="table-dark">
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Price</th>
+               </tr>
+              </thead>
+             <tbody>
+               {% for i in data %}   
+               <tr><td>{{i.name}}</td><td>{{i.type}}</td><td>{{i.price}}</td></tr>
+               {% endfor %}  
+             </tbody>  
+           </table>
+           
           </main>
           <footer>
-               <!-- <%- include('footer'); %> -->
                {% include 'footer.html' %}
           </footer>
      </div>
