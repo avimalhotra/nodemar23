@@ -11,6 +11,7 @@ const session=require("express-session");
 const nunjucks=require("nunjucks");
 const mongoose=require('./dao');
 const cars=require('./models/cars');
+const pins=require('./models/pin');
 
 // configure
 nunjucks.configure(path.resolve(__dirname,'public/views'),{
@@ -19,7 +20,6 @@ nunjucks.configure(path.resolve(__dirname,'public/views'),{
      noCache:false,
      watch:true
  });
-
 
 
 //app.set('view engine', 'ejs');
@@ -68,10 +68,13 @@ app.get('/',(req,res)=>{
           res.render('index.html',{name:"Avinash",id:212,city:{name:"noida",pin:201301},month:["jan","feb"],data:i});
      });
 
+
 });
 
 app.get('/storedata',(req,res)=>{
+     
      let name=req.query.name, type=req.query.type,price=req.query.price;
+
      const car=new cars({
           _id: new mongoose.Types.ObjectId(),
           name:name,
@@ -81,11 +84,30 @@ app.get('/storedata',(req,res)=>{
      
 
      car.save().then(i=>{
-          res.status(200).send("data saved")
-     })
+          //res.status(200).send("data saved")
+          res.render("error.html",{msg:"Car Saved"});
+     }).catch(i=>{
+          res.render("error.html",{msg:"Invalid or Duplicate Car",err:i});
+     });
 
 })
 
+app.get("/pincode",(req,res)=>{
+     let pin=req.query.pin;
+
+     pins.find({pincode:pin}).then(i=>{
+          if( i.length==0 ){
+               res.status(200).render("pincode.html",{data:"No pincode found"});
+          }
+          else
+          {
+               res.status(200).render("pincode.html",{data:i});
+          }
+     }).catch(j=>{
+          res.status(200).render("pincode.html",{data:j});
+     });
+
+});
 
 app.get('/about',(req,res)=>{
      res.render('about.html',{name:"Avi",id:200,month:["jan","feb"],user:{name:"aa",id:22}})
@@ -164,7 +186,7 @@ app.use('/admin',checkAuth,(req,res)=>{
 /* wildcard handler */
 app.get('/**',(req,res)=>{
      res.status(404).send("404 , Page not Found");
-     //res.status(404).redirect("/error.html")
+     //res.status(404).render("error.html")
 });
 
 app.listen(process.env.PORT,()=>{

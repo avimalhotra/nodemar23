@@ -1,1 +1,6 @@
-<h1>Hello {{name}} </h1>
+<div class="d-flex justify-content-between">
+     <h1>Hello {{name}} </h1>
+     <form action="/pincode" method="get" autocomplete="off">
+          <input type="search" name="pin" required pattern="^[0-9]{6}$" placeholder="Search Pincode" aria-label="Search Pincode"> <button class="btn btn-primary">Search</button>
+     </form>
+</div>

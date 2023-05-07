@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Hello Express</title>
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="container">
+
+          <header>
+               {% include 'header.html' %}
+          </header>
+          <nav>
+               {% include 'nav.html' %}
+          </nav>
+          <main>
+               <h2>Pincodes Result</h2>
+               <table class="table table-bordered">
+                    <thead>
+                         <tr>
+                              <th>Name</th>
+                              <th>Taluk</th>
+                              <th>District</th>
+                              <th>State</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         {% for i in data %}   
+                         <tr><td>{{i.officeName}}</td><td>{{i.taluk}}</td><td>{{i.districtName}}</td><td>{{i.stateName}}</td></tr>
+                         {% endfor %}  
+                    </tbody>
+               </table>
+               
+          </main>
+          <footer>
+               {% include 'footer.html' %}
+          </footer>
+          <script src="js/common.js"></script>
+     </div>
+</body>
+</html>

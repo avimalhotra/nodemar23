@@ -42,11 +42,11 @@
           </section>
           <section class="border border-2 p-3 my-3">
                <h2>Add Data</h2>
-               <form action="/storedata" method="get">
+               <form action="/storedata" method="get" autocomplete="off">
                     <div class="row g-3 align-items-center">
-                         <div class="col"><input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name" required></div>
-                         <div class="col"><input type="text" class="form-control" name="type" placeholder="Type" aria-label="Type" required></div>
-                         <div class="col"><input type="text" class="form-control" name="price" placeholder="Price" aria-label="Price" required></div>
+                         <div class="col"><input type="text" class="form-control" name="name" placeholder="Name" pattern="^[a-zA-Z]{1}[a-zA-Z ]{1,}$" aria-label="Name" required></div>
+                         <div class="col"><input type="text" class="form-control" name="type" pattern="^[a-zA-Z]{3,}$" placeholder="Type" aria-label="Type" required></div>
+                         <div class="col"><input type="text" class="form-control" name="price" placeholder="Price" aria-label="Price" pattern="^[0-9]{6,}$" required></div>
                          <div class="col"><button class="btn btn-primary" type="submit">Submit</button></div>
                     </div>
                </form>
