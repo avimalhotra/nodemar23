@@ -66,7 +66,11 @@
                {% endfor %}  
              </tbody>  
            </table>
-           
+           <h2>Upload File</h2>
+           <form action="/profile" method="post" enctype="multipart/form-data">
+               <label>Upload Picture: <input type="file" name="avatar" accept=".jpg,.png"></label>
+               <button class="btn btn-primary"> Send</button>
+             </form>
           </main>
           <footer>
                {% include 'footer.html' %}

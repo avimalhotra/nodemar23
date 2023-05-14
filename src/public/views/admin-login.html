@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Hello {{name}}</title>
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="container">
+          <header>
+               {% include 'header.html' %}
+          </header>
+          <nav>
+               {% include 'nav.html' %}
+          </nav>
+          <main>
+               <p class="float-end"><a href="/logout">Logout</a></p>
+               <h2>Hello {{name}}</h2>
+               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde nulla beatae nobis, minus enim sed possimus sapiente ad placeat, incidunt neque quibusdam ea officia labore aperiam nostrum reiciendis odio quam.</p>
+               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde nulla beatae nobis, minus enim sed possimus sapiente ad placeat, incidunt neque quibusdam ea officia labore aperiam nostrum reiciendis odio quam.</p>
+               
+               <p>{{message}}</p>
+          </main>
+          <footer>
+               {% include 'footer.html' %}
+          </footer>
+     </div>
+     <script src="js/common.js"></script>   
+
+</body>
+</html>

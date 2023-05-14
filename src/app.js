@@ -12,6 +12,29 @@ const nunjucks=require("nunjucks");
 const mongoose=require('./dao');
 const cars=require('./models/cars');
 const pins=require('./models/pin');
+const user=require('./models/user');
+const multer  = require('multer')
+const upload = multer({ dest: 'src/public/uploads/' });
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+app.set('trust proxy', 1); 
+app.use(session({
+     secret:"session",
+     resave:false,
+     saveUninitialized:true,
+     cookie:{secure:false}
+ }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+     done(null, user);
+   });
+ passport.deserializeUser(function (user, next) {
+     next(null, user);
+ });
 
 // configure
 nunjucks.configure(path.resolve(__dirname,'public/views'),{
@@ -25,13 +48,7 @@ nunjucks.configure(path.resolve(__dirname,'public/views'),{
 //app.set('view engine', 'ejs');
 ///app.set('views', path.join(__dirname, 'public/views'));
 
-app.set('trust proxy', 1); 
-app.use(session({
-     secret:"session",
-     resave:false,
-     saveUninitialized:true,
-     cookie:{secure:false, maxAge:5000}
- }))
+
 
 app.use(cookieParser());
 app.use(bodyParser.text());
@@ -67,9 +84,83 @@ app.get('/',(req,res)=>{
      let data=cars.find({}).sort({name:1}).then(i=>{
           res.render('index.html',{name:"Avinash",id:212,city:{name:"noida",pin:201301},month:["jan","feb"],data:i});
      });
-
-
 });
+
+
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+     // req.file is the `avatar` file
+     // req.body will hold the text fields, if there were any
+     res.status(200).send("File Uploaded");
+});
+
+
+passport.use( new LocalStrategy({ usernameField: 'username',passwordField:'password' },(username, password, done) => {
+
+     user.find({ username: username }).then(user=>{ 
+
+          if( user.length==0 ){
+              return done(null, null, { message: 'No user found!' });
+          }
+          else  if (user[0].password !== password) {
+             
+               return done(null, null, { message: 'Password is incorrect!' }) }
+          else{
+               return done(null, user, null);
+          }
+
+     });
+
+   }
+ ));
+
+ function isAuthenticated(req, res, next) {
+     if (req.isAuthenticated()) {
+       next();
+     } else {
+       res.status(403).render('login.html',{msg:"Forbidden"});
+     }
+ };
+
+ app.get('/adminlogin', isAuthenticated, (req, res) => { res.render('admin-login.html',{name:"admin"}) });
+ 
+ app.get('/logout', (req, res) => { 
+     if (req.session) {
+         req.session.destroy((err)=> {
+           if(err) {
+             return next(err);
+           } else {
+               res.clearCookie('connect.sid');
+               req.logout(i=>{});
+               if (!req.user) { 
+                   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+               }
+               res.render('login.html',{ msg:"Logout Successfully"});
+           }
+         });
+       }
+ });
+ app.post("/login",(req,res)=>{
+     passport.authenticate('local', (err, user, info) =>{
+         if (err) {
+           res.render('login.html', { error: err });
+         } 
+         else if (!user) {
+           res.render('login.html', { errorMessage: info.message });
+         } 
+         else {
+           //setting users in session
+           req.logIn(user, function (err) {
+             if (err) {
+               res.render('login.html', { error: err });
+             } else {
+               res.render('admin-login.html',{ name:user[0].username});
+              }
+           })
+         }
+       })(req, res);
+ });
+
+
 
 app.get('/storedata',(req,res)=>{
      
@@ -111,7 +202,11 @@ app.get("/pincode",(req,res)=>{
 
 app.get('/about',(req,res)=>{
      res.render('about.html',{name:"Avi",id:200,month:["jan","feb"],user:{name:"aa",id:22}})
-})
+});
+app.get('/login',(req,res)=>{
+     res.render('login.html',{name:"Login"})
+});
+
 
 //const data=[{name:"aa",id:12},{name:"bb",id:13}];
 
